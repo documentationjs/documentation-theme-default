@@ -27,13 +27,13 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-subst,
 .hljs-request,
 .hljs-status {
-  color: #1184CE;
+  color: #ff6666;
 }
 
 .hljs-number,
 .hljs-hexcolor,
 .ruby .hljs-constant {
-  color: #ed225d;
+  color: #99cc00;
 }
 
 .hljs-string,
@@ -41,7 +41,7 @@ github.com style (c) Vasily Polovnyov <vast@whiteants.net>
 .hljs-phpdoc,
 .hljs-dartdoc,
 .tex .hljs-formula {
-  color: #ed225d;
+  color: #ffcc33;
 }
 
 .hljs-title,
