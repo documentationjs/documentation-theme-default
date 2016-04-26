@@ -2,39 +2,63 @@
 
 // add anchor links to headers
 anchors.options.placement = 'left';
-anchors.add().remove('.no-anchor');
+anchors.add('h3');
 
 // Filter UI
-var tocElements = document.getElementById('toc').getElementsByTagName('a');
-document.getElementById('filter-input').addEventListener('keyup', function(e) {
+var tocElements = document.getElementById('toc')
+  .getElementsByTagName('li');
 
-  var i, element;
+document.getElementById('filter-input')
+  .addEventListener('keyup', function (e) {
 
-  // enter key
-  if (e.keyCode === 13) {
-    // go to the first displayed item in the toc
-    for (i = 0; i < tocElements.length; i++) {
-      element = tocElements[i];
-      if (!element.classList.contains('hide')) {
-        location.replace(element.href);
-        return e.preventDefault();
+    var i, element;
+
+    // enter key
+    if (e.keyCode === 13) {
+      // go to the first displayed item in the toc
+      for (i = 0; i < tocElements.length; i++) {
+        element = tocElements[i];
+        if (!element.classList.contains('display-none')) {
+          location.replace(element.firstChild.href);
+          return e.preventDefault();
+        }
       }
     }
-  }
 
-  var match = function() { return true; },
-    value = this.value.toLowerCase();
+    var match = function () {
+      return true;
+    };
 
-  if (!value.match(/^\s*$/)) {
-    match = function(text) { return text.toLowerCase().indexOf(value) !== -1; };
-  }
+    var value = this.value.toLowerCase();
 
-  for (i = 0; i < tocElements.length; i++) {
-    element = tocElements[i];
-    if (match(element.innerHTML)) {
-      element.classList.remove('hide');
-    } else {
-      element.classList.add('hide');
+    if (!value.match(/^\s*$/)) {
+      match = function (text) {
+        return text.toLowerCase().indexOf(value) !== -1;
+      };
     }
+
+    for (i = 0; i < tocElements.length; i++) {
+      element = tocElements[i];
+      if (match(element.firstChild.innerHTML)) {
+        element.classList.remove('display-none');
+      } else {
+        element.classList.add('display-none');
+      }
+    }
+  });
+
+var toggles = document.getElementsByClassName('toggle-step-sibling');
+for (var i = 0; i < toggles.length; i++) {
+  toggles[i].onclick = toggleStepSibling;
+}
+
+function toggleStepSibling() {
+  var stepSibling = this.parentNode.parentNode.parentNode.getElementsByClassName('toggle-target')[0];
+  if (stepSibling.classList.contains('hide')) {
+    stepSibling.classList.remove('hide');
+    this.innerHTML = '⤬';
+  } else {
+    stepSibling.classList.add('hide');
+    this.innerHTML = '☰';
   }
-});
+}

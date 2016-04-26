@@ -19,42 +19,56 @@ module.exports = function (comments, options, callback) {
     return path;
   });
 
+  var imports = {
+    permalink: function (path) {
+      return path.join('.');
+    },
+    signature: function (section) {
+      var returns = '';
+      var prefix = '';
+      if (section.kind === 'class') {
+        prefix = 'new ';
+      }
+      if (section.returns) {
+        returns = ': ' +
+          formatMarkdown.type(section.returns[0].type, paths);
+      }
+      return prefix + section.name +
+        formatParameters(section) + returns;
+    },
+    md: function (ast, inline) {
+      if (inline && ast && ast.children.length && ast.children[0].type === 'paragraph') {
+        return formatMarkdown({
+          type: 'root',
+          children: ast.children[0].children
+        }, paths);
+      }
+      return formatMarkdown(ast, paths);
+    },
+    formatType: function (section) {
+      return formatMarkdown.type(section.type, paths);
+    },
+    autolink: function (text) {
+      return formatMarkdown.link(paths, text);
+    },
+    highlight: function (str) {
+      return highlight(str);
+    }
+  };
+
   var pageTemplate = _.template(fs.readFileSync(path.join(__dirname, 'index.hbs'), 'utf8'), {
     imports: {
-      section: _.template(fs.readFileSync(path.join(__dirname, 'section.hbs'), 'utf8'), {
-        imports: {
-          permalink: function(path) {
-            return path.join('.');
-          },
-          md: function (string) {
-            return formatMarkdown(string, paths);
-          },
-          formatType: function(section) {
-            return formatMarkdown.type(section.type, paths);
-          },
-          formatParameters: formatParameters
-        }
+      renderSection: _.template(fs.readFileSync(path.join(__dirname, 'section.hbs'), 'utf8'), {
+        imports: imports
       }),
-      permalink: function(path) {
+      permalink: function (path) {
         return path.join('.');
       },
-      highlight: function(str) {
+      highlight: function (str) {
         return highlight(str);
       }
     }
   });
-
-
-  // Handlebars.registerHelper('format_params', formatParameters);
-
-
-  // Handlebars.registerHelper('format_type', function (type) {
-  //   return new Handlebars.SafeString(formatMarkdown.type(type, paths));
-  // });
-
-  // Handlebars.registerHelper('autolink', function (text) {
-  //   return new Handlebars.SafeString(formatMarkdown.link(paths, text));
-  // });
 
   // push assets into the pipeline as well.
   vfs.src([__dirname + '/assets/**'], { base: __dirname })
@@ -67,4 +81,4 @@ module.exports = function (comments, options, callback) {
         }), 'utf8')
       })));
     }));
-}
+};
