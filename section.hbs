@@ -1,146 +1,112 @@
 <section class='py2 clearfix'>
-  <h2 id='{{permalink}}' class='mt0'>
-    {{name}}<span class='gray'>{{format_params}}</span>
+  <h2 id='<%- permalink(section.path) %>' class='mt0'>
+    <%- section.name %><span class='gray'><%- formatParameters(section) %></span>
   </h2>
-  {{#if augments}}
+  <% if (section.augments) { %>
     <p>
       Extends
-      {{#augments}}
-        {{autolink name}}
-      {{/augments}}
+      <% if (augments) { %>
+        <%= autolink(section.name) %>
+      <% } %>
     </p>
-  {{/if}}
-  {{#if context.github}}
-    <p><a href='{{context.github}}'><code>{{context.path}}</code></a></p>
-  {{/if}}
-  {{#if version }}<div>Version: {{version}}</div>{{/if}}
-  {{#if license }}<div>License: {{license}}</div>{{/if}}
-  {{#if author }}<div>Author: {{author}}</div>{{/if}}
-  {{#if copyright }}<div>Copyright: {{copyright}}</div>{{/if}}
-  {{#if since }}<div>Since: {{since}}</div>{{/if}}
-  {{md description}}
-  {{#if params}}
+  <% }%>
+  <% if (section.context.github) { %>
+    <p><a href='<%- context.github%>'><code><%- context.path %></code></a></p>
+  <% } %>
+  <% if (section.version) { %><div>Version: <%- section.version %></div><% }%>
+  <% if (section.license) { %><div>License: <%- section.license %></div><% }%>
+  <% if (section.author) { %><div>Author: <%- section.author %></div><% }%>
+  <% if (section.copyright) { %><div>Copyright: <%- section.copyright %></div><% }%>
+  <% if (section.since) { %><div>Since: <%- section.since %></div><% }%>
+  <%= md(section.description) %>
+  <% if (section.params) { %>
     <h4>Parameters</h4>
     <ul class='suppress-p-margin'>
-      {{#params}}
-        <li>{{format_type type}} <strong>{{name}}</strong>
-          {{#default}}
-            (default <code>{{.}}</code>)
-          {{/default}}
+      <% section.params.forEach(function(param) { %>
+        <li><%= formatType(param) %> <strong><%- param.name%></strong>
+          <% if (param.default) { %>
+            (default <code><%- param.default %></code>)
+          <% } %>
           :
           <div class='force-inline'>
-            {{md description}}
+            <%= md(param.description) %>
           </div>
-          {{#if properties}}
+          <% if (param.properties) { %>
             <ul>
-              {{#properties}}
-                <li>{{format_type type}} {{name}}
-                  {{#default}}
-                    (default <code>{{.}}</code>)
-                  {{/default}}
-                  {{md description}}</li>
-              {{/properties}}
+              <% param.properties.forEach(function(property) { %>
+                <li><%= formatType(property) %> <%- property.name %>
+                  <% if (property.default) { %>
+                    (default <code><%- property.default %></code>)
+                  <% } %>
+                  <%- md(property.description) %></li>
+              <% }) %>
             </ul>
-          {{/if}}
+          <% } %>
         </li>
-      {{/params}}
+      <% }) %>
     </ul>
-  {{/if}}
-  {{#if properties}}
+  <% } %>
+
+ <% if (section.properties) { %>
     <h4>Properties</h4>
     <ul class='suppress-p-margin'>
-      {{#properties}}
-        <li>{{format_type type}} <strong>{{name}}</strong>
-            {{#default}}
-              (default <code>{{.}}</code>)
-            {{/default}}
-            {{#description}}
-              :
-              <div class='force-inline'>
-                {{md .}}
-              </div>
-            {{/description}}
-            </li>
-        {{#if properties}}
+      <% section.properties.forEach(function(property) { %>
+        <li><%= formatType(property.type) %> <strong><%- property.name%></strong>
+          <% if (property.default) { %>
+            (default <code><%- property.default %></code>)
+          <% } %>
+          <% if (property.description) { %>
+            :
+            <div class='force-inline'>
+              <%= md(property.description) %>
+            </div>
+	  <% } %>
+        </li>
+        <% if (section.properties) { %>
           <ul>
-            {{#properties}}
-              <li><code>{{name}}</code> {{format_type type}}
-                {{#default}}
-                  (default <code>{{.}}</code>)
-                {{/default}}
-                {{md description}}</li>
-            {{/properties}}
+            <% property.properties.forEach(function(property) { %>
+              <li><code><%- name%></code> <%= formatType(property.type) %>
+                <% if (property.default) { %>
+                  (default <code><%- property.default %></code>)
+                <% } %>
+                <% md(property.description) %></li>
+            <% }) %>
           </ul>
-        {{/if}}
-      {{/properties}}
+        <% } %>
+      <% }) %>
     </li>
-  {{/if}}
-  {{#if returns}}
-    {{#returns}}
-      <h4>Returns</h4>
-      <code>{{format_type type}}</code>
-      {{#if description}}:{{/if}}
-      <div class='force-inline'>
-        {{md description}}
-      </div>
-    {{/returns}}
-  {{/if}}
-  {{#if throws}}
+  <% } %>
+  <% if (section.returns) { %>
+     <% section.returns.forEach(function(ret) { %>
+       <h4>Returns</h4>
+       <code><%= formatType(ret) %></code>
+       <% if (ret.description) { %>:
+	 <div class='force-inline'>
+	   <%= md(ret.description) %>
+	 </div>
+       <% }%>
+     <% }) %>
+   <% } %>
+  <% if (section.throws) { %>
     <h4>Throws</h4>
     <ul>
-      {{#throws}}
-        <li>{{format_type type}}: <div class='force-inline'>{{md description}}</div></li>
-      {{/throws}}
+      <% section.throws.forEach(function(throws) { %>
+        <li><%= formatType(throws) %>:
+	  <div class='force-inline'><%= md(throws.description) %></div></li>
+      <% }); %>
     </ul>
-  {{/if}}
-  {{#if examples}}
+  <% } %>
+
+  <% if (section.examples) { %>
     <h4>Examples</h4>
-  {{#each examples ~}}
-    {{#if caption}}<p>{{md caption}}</p>{{/if}}
-    <pre class='overflow-auto'>{{highlight description}}</pre>
-  {{/each}}
-  {{/if}}
-    {{#if members.static}}
-      <h4>Static members</h4>
-      {{#each members.static}}
-        <div class='collapsible' id='{{permalink}}'>
-          <a href='#{{permalink}}'>
-            <code>
-              .{{name}}<span class='gray'>{{format_params}}</span>
-            </code>
-            <div class='force-inline'>
-              {{md description}}
-            </div>
-          </a>
-          <div class='collapser border px2 m2'>
-{{> section}}
-          </div>
-        </div>
-      {{/each}}
-    {{/if}}
-    {{#if members.instance}}
-      <h4>Instance members</h4>
-      {{#each members.instance}}
-        <div class='collapsible' id='{{permalink}}'>
-          <a href='#{{permalink}}'>
-            <code>
-              #{{name}}<span class='gray'>{{format_params}}</span>
-            </code>
-            <div class='force-inline'>
-              {{md description}}
-            </div>
-          </a>
-          <div class='collapser border px2'>
-{{> section}}
-          </div>
-        </div>
-      {{/each}}
-    {{/if}}
-    {{#if events}}
-      {{#each events}}
-        <div>
-  {{> section}}
-        </div>
-      {{/each}}
-    {{/if}}
-</section>
+    <% section.examples.forEach(function(example) { %>
+      <% if (example.caption) { %><p><%= md(example.caption) %></p><% } %>
+      <pre class='overflow-auto'><%= highlight(example.description) %></pre>
+    <% }) %>
+  <% } %>
+
+  <% if (section.members.static.length) { %>
+    <h4>Static members</h4>
+    <% section.members.static.forEach(function(static) { %>
+    <% }) %>
+  <% } %>
