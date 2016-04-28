@@ -53,12 +53,13 @@ for (var i = 0; i < toggles.length; i++) {
 }
 
 function toggleStepSibling() {
-  var stepSibling = this.parentNode.parentNode.parentNode.getElementsByClassName('toggle-target')[0];
+  var stepSibling = this.parentNode.getElementsByClassName('toggle-target')[0] ||
+    this.parentNode.parentNode.parentNode.getElementsByClassName('toggle-target')[0];
   if (stepSibling.classList.contains('hide')) {
     stepSibling.classList.remove('hide');
-    this.innerHTML = '⤬';
+    this.innerHTML = this.dataset.on || '⤬';
   } else {
     stepSibling.classList.add('hide');
-    this.innerHTML = '☰';
+    this.innerHTML = this.dataset.off || '☰';
   }
 }
