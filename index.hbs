@@ -27,9 +27,13 @@
                 <% var hasMembers = doc.members.static.length || doc.members.instance.length %>
                 <li><a
                   href='#<%=permalink(doc.path)%>'
-                  class=''>
+                  <% if (hasMembers) { %>
+                  class='toggle-sibling'
+                  <% } %>
+                  >
                   <%- doc.name %>
-                </a> <% if (hasMembers) { %><a data-on='▾' data-off='▸' class='h6 toggle-step-sibling'>▸</a><% } %>
+                  <% if (hasMembers) { %><span class='icon'>▸</span><% } %>
+                </a>
                 <% if (hasMembers) { %>
                 <div class='toggle-target hide'>
                   <% if (doc.members.static && doc.members.static.length) { %>

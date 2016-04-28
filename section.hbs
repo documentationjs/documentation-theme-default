@@ -108,9 +108,9 @@
       <div class="sm-col sm-col-5 h5">Description</div>
       <% section.members.static.forEach(function(member) { %>
 	<div>
-	  <div class="clearfix">
+	  <div class="clearfix toggle-sibling">
 	    <div class="py1 keyline-top sm-col sm-col-7">
-	      <a class='h6 toggle-step-sibling'>☰</a> <span class='pre'><%= signature(member) %></span>
+	      <a class='h6 toggle-step-sibling icon'>▸</a> <span class='pre'><%= signature(member) %></span>
 	    </div>
 	    <div class="py1 keyline-top sm-col sm-col-5 h5 truncate"><%= md(member.description, true) %></div>
 	  </div>
@@ -132,9 +132,9 @@
       <div class="sm-col sm-col-5 h5">Description</div>
       <% section.members.instance.forEach(function(member) { %>
 	<div>
-	  <div class="clearfix">
+	  <div class="clearfix toggle-sibling">
 	    <div class="py1 keyline-top sm-col sm-col-7">
-	      <a class='h6 toggle-step-sibling'>☰</a> <span class='pre'><%= signature(member) %></span>
+	      <a class='h6 toggle-step-sibling icon'>▸</a> <span class='pre'><%= signature(member) %></span>
 	    </div>
 	    <div class="py1 keyline-top sm-col sm-col-5 h5 truncate"><%= md(member.description, true) %></div>
 	  </div>
@@ -156,9 +156,9 @@
       <div class="sm-col sm-col-7 h5">Description</div>
       <% section.members.events.forEach(function(member) { %>
 	<div>
-	  <div class="clearfix">
+	  <div class="clearfix toggle-sibling">
 	    <div class="py1 keyline-top sm-col sm-col-5">
-	      <a class='h6 toggle-step-sibling'>☰</a> <span class='pre'><%= signature(member) %></span>
+	      <a class='h6 toggle-step-sibling icon'>▸</a> <span class='pre'><%= signature(member) %></span>
 	    </div>
 	    <div class="py1 keyline-top sm-col sm-col-7 h5 truncate"><%= md(member.description, true) %></div>
 	  </div>

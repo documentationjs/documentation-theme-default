@@ -53,13 +53,29 @@ for (var i = 0; i < toggles.length; i++) {
 }
 
 function toggleStepSibling() {
-  var stepSibling = this.parentNode.getElementsByClassName('toggle-target')[0] ||
-    this.parentNode.parentNode.parentNode.getElementsByClassName('toggle-target')[0];
+  var stepSibling = this.parentNode.parentNode.parentNode.getElementsByClassName('toggle-target')[0];
   if (stepSibling.classList.contains('hide')) {
     stepSibling.classList.remove('hide');
-    this.innerHTML = this.dataset.on || '⤬';
+    icon.innerHTML = '▾';
   } else {
     stepSibling.classList.add('hide');
-    this.innerHTML = this.dataset.off || '☰';
+    icon.innerHTML = '▸';
+  }
+}
+
+var items = document.getElementsByClassName('toggle-sibling');
+for (var j = 0; j < items.length; j++) {
+  items[j].onclick = toggleSibling;
+}
+
+function toggleSibling() {
+  var stepSibling = this.parentNode.getElementsByClassName('toggle-target')[0];
+  var icon = this.getElementsByClassName('icon')[0]
+  if (stepSibling.classList.contains('hide')) {
+    stepSibling.classList.remove('hide');
+    icon.innerHTML = '▾';
+  } else {
+    stepSibling.classList.add('hide');
+    icon.innerHTML = '▸';
   }
 }
