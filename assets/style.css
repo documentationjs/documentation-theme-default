@@ -81,7 +81,7 @@ h4:hover .anchorjs-link {
   }
 }
 
-.pre, pre {
+.pre, pre, code {
   font-family: Source Code Pro,Menlo,Consolas,Liberation Mono,monospace;
   font-size: 14px;
 }
@@ -92,4 +92,12 @@ h4:hover .anchorjs-link {
 
 .width2 {
   width: 1rem;
+}
+
+ol {
+  padding-left: 2rem;
+}
+
+ul {
+  padding-left: 1rem;
 }

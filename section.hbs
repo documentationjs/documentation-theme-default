@@ -29,15 +29,15 @@
 
   <% if (section.params) { %>
     <h4>Parameters</h4>
-    <ul class='my1 list-reset'>
+    <ol class='my1'>
       <% section.params.forEach(function(param) { %>
-        <li><strong><%- param.name%></strong> <%= formatType(param) %><% if (param.default) { %>
+        <li><code><%- param.name%></code> <em>(<%= formatType(param) %><% if (param.default) { %>
           (default <code><%- param.default %></code>)
-        <% } %>: <%= md(param.description, true) %>
+        <% } %>)</em>: <%= md(param.description, true) %>
           <% if (param.properties) { %>
             <ul>
               <% param.properties.forEach(function(property) { %>
-                <li><%= formatType(property) %> <%- property.name %>
+                <li><code><%- property.name %></code> <em>(<%= formatType(property) %>)</em>
                   <% if (property.default) { %>
                     (default <code><%- property.default %></code>)
                   <% } %>
@@ -47,33 +47,32 @@
           <% } %>
         </li>
       <% }) %>
-    </ul>
+    </ol>
   <% } %>
 
   <% if (section.properties) { %>
     <h4>Properties</h4>
-    <ul class='suppress-p-margin'>
+    <ul>
       <% section.properties.forEach(function(property) { %>
-        <li><%= formatType(property) %> <strong><%- property.name%></strong>
-          <% if (property.default) { %>
+        <li><code><%- property.name%></code> <em>(<%= formatType(property) %>)</em><% if (property.default) { %>
             (default <code><%- property.default %></code>)
+          <% } %><% if (property.description) {
+	    %>: <%= md(property.description, true) %><%
+	  } %>
+          <% if (property.properties) { %>
+            <ul>
+              <% property.properties.forEach(function(property) { %>
+                <li><code><%- name%></code> <%= formatType(property) %>
+                  <% if (property.default) { %>
+                    (default <code><%- property.default %></code>)
+                  <% } %>
+                  <%= md(property.description) %></li>
+              <% }) %>
+            </ul>
           <% } %>
-          <% if (property.description) { %>: <%= md(property.description, true) %>
-	  <% } %>
         </li>
-        <% if (property.properties) { %>
-          <ul>
-            <% property.properties.forEach(function(property) { %>
-              <li><code><%- name%></code> <%= formatType(property) %>
-                <% if (property.default) { %>
-                  (default <code><%- property.default %></code>)
-                <% } %>
-                <%= md(property.description) %></li>
-            <% }) %>
-          </ul>
-        <% } %>
       <% }) %>
-    </li>
+    </ul>
   <% } %>
 
   <% if (section.returns) { %>
@@ -138,6 +137,30 @@
 	      <a class='h6 toggle-step-sibling'>☰</a> <span class='pre'><%= signature(member) %></span>
 	    </div>
 	    <div class="py1 keyline-top sm-col sm-col-5 h5 truncate"><%= md(member.description, true) %></div>
+	  </div>
+	  <div class="clearfix hide toggle-target">
+	    <%= renderSection({
+	      section: member,
+	      renderSection: renderSection
+	    }) %>
+	  </div>
+	</div>
+      <% }) %>
+    </div>
+  <% } %>
+
+  <% if (section.members.events && section.members.events.length) { %>
+    <h4>Events</h4>
+    <div class="clearfix">
+      <div class="sm-col sm-col-5 h5">Event</div>
+      <div class="sm-col sm-col-7 h5">Description</div>
+      <% section.members.events.forEach(function(member) { %>
+	<div>
+	  <div class="clearfix">
+	    <div class="py1 keyline-top sm-col sm-col-5">
+	      <a class='h6 toggle-step-sibling'>☰</a> <span class='pre'><%= signature(member) %></span>
+	    </div>
+	    <div class="py1 keyline-top sm-col sm-col-7 h5 truncate"><%= md(member.description, true) %></div>
 	  </div>
 	  <div class="clearfix hide toggle-target">
 	    <%= renderSection({

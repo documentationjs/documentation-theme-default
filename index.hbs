@@ -32,37 +32,40 @@
                 </a> <% if (hasMembers) { %><a data-on='▾' data-off='▸' class='h6 toggle-step-sibling'>▸</a><% } %>
                 <% if (hasMembers) { %>
                 <div class='toggle-target hide'>
-                  <% if (doc.members.static) { %>
+                  <% if (doc.members.static && doc.members.static.length) { %>
                   <ul class='list-reset py1-ul pl1'>
-                   <% doc.members.static.forEach(function(member) { %>
-                     <li><a
-                       href='#<%=permalink(member.path)%>'
-                       class='regular'>
-                       #<%- member.name %>
-                     </a></li>
-                   <% }) %>
-                  </ul>
-                  <% } %>
-                  <% if (doc.members.instance) { %>
-                    <ul class='list-reset py1-ul pl1'>
-                    <% doc.members.instance.forEach(function(member) { %>
-                    <li><a
-                      href='#<%=permalink(member.path)%>'
-                      class='regular'>
-                      .<%- member.name %>
-                    </a></li>
-                    <% }) %>
-                  </ul>
-                  <% } %>
-                  <% if (doc.members.events) { %>
-                    <ul class='list-reset py1-ul pl1'>
-                    <% doc.members.events.forEach(function(member) { %>
+                    <div class='h5 pt1'>Static members</div>
+                    <% doc.members.static.forEach(function(member) { %>
                       <li><a
                         href='#<%=permalink(member.path)%>'
                         class='regular'>
-                        <code>ⓔ <%- member.name %></code>
+                        #<%- member.name %>
                       </a></li>
                     <% }) %>
+                    </ul>
+                  <% } %>
+                  <% if (doc.members.instance && doc.members.instance.length) { %>
+                    <ul class='list-reset py1-ul pl1'>
+                      <div class='h5 pt1'>Instance members</div>
+                      <% doc.members.instance.forEach(function(member) { %>
+                      <li><a
+                        href='#<%=permalink(member.path)%>'
+                        class='regular'>
+                        .<%- member.name %>
+                      </a></li>
+                      <% }) %>
+                    </ul>
+                  <% } %>
+                  <% if (doc.members.events && doc.members.events.length) { %>
+                    <ul class='list-reset py1-ul pl1'>
+                      <div class='h5 pt1'>Events</div>
+                      <% doc.members.events.forEach(function(member) { %>
+                        <li><a
+                          href='#<%=permalink(member.path)%>'
+                          class='regular'>
+                          ⓔ <%- member.name %>
+                        </a></li>
+                      <% }) %>
                     </ul>
                   <% } %>
                 </div>
