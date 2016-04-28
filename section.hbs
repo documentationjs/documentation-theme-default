@@ -41,7 +41,7 @@
                   <% if (property.default) { %>
                     (default <code><%- property.default %></code>)
                   <% } %>
-                  <%- md(property.description) %></li>
+                  <%= md(property.description, true) %></li>
               <% }) %>
             </ul>
           <% } %>
@@ -54,21 +54,21 @@
     <h4>Properties</h4>
     <ul class='suppress-p-margin'>
       <% section.properties.forEach(function(property) { %>
-        <li><%= formatType(property.type) %> <strong><%- property.name%></strong>
+        <li><%= formatType(property) %> <strong><%- property.name%></strong>
           <% if (property.default) { %>
             (default <code><%- property.default %></code>)
           <% } %>
           <% if (property.description) { %>: <%= md(property.description, true) %>
 	  <% } %>
         </li>
-        <% if (section.properties) { %>
+        <% if (property.properties) { %>
           <ul>
             <% property.properties.forEach(function(property) { %>
-              <li><code><%- name%></code> <%= formatType(property.type) %>
+              <li><code><%- name%></code> <%= formatType(property) %>
                 <% if (property.default) { %>
                   (default <code><%- property.default %></code>)
                 <% } %>
-                <% md(property.description) %></li>
+                <%= md(property.description) %></li>
             <% }) %>
           </ul>
         <% } %>
@@ -100,6 +100,30 @@
       <% if (example.caption) { %><p><%= md(example.caption) %></p><% } %>
       <pre class='p1 overflow-auto fill-light'><%= highlight(example.description) %></pre>
     <% }) %>
+  <% } %>
+
+  <% if (section.members.static.length) { %>
+    <h4>Static members</h4>
+    <div class="clearfix">
+      <div class="sm-col sm-col-7 h5">Method</div>
+      <div class="sm-col sm-col-5 h5">Description</div>
+      <% section.members.static.forEach(function(member) { %>
+	<div>
+	  <div class="clearfix">
+	    <div class="py1 keyline-top sm-col sm-col-7">
+	      <a class='h6 toggle-step-sibling'>☰</a> <span class='pre'><%= signature(member) %></span>
+	    </div>
+	    <div class="py1 keyline-top sm-col sm-col-5 h5"><%= md(member.description, true) %></div>
+	  </div>
+	  <div class="clearfix hide toggle-target">
+	    <%= renderSection({
+	      section: member,
+	      renderSection: renderSection
+	    }) %>
+	  </div>
+	</div>
+      <% }) %>
+    </div>
   <% } %>
 
   <% if (section.members.instance.length) { %>

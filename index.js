@@ -46,6 +46,9 @@ module.exports = function (comments, options, callback) {
       return formatMarkdown(ast, paths);
     },
     formatType: function (section) {
+      if (!section.type.type) {
+        console.log('the section is', section);
+      }
       return formatMarkdown.type(section.type, paths);
     },
     autolink: function (text) {
