@@ -6,13 +6,18 @@ test('main', function (t) {
   var comments = [
     {
       path: [],
+      context: {},
       description: remark.parse('test'),
-      returns: {
+      members: {
+        static: [],
+        instance: []
+      },
+      returns: [{
         type: {
           type: 'NameExpression',
           name: 'Foo'
         }
-      }
+      }]
     }
   ];
 

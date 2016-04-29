@@ -101,7 +101,7 @@
     <% }) %>
   <% } %>
 
-  <% if (section.members.static.length) { %>
+  <% if (section.members.static && section.members.static.length) { %>
     <h4>Static members</h4>
     <div class="clearfix">
       <div class="sm-col sm-col-7 h5">Method</div>
@@ -125,7 +125,7 @@
     </div>
   <% } %>
 
-  <% if (section.members.instance.length) { %>
+  <% if (section.members.instance && section.members.instance.length) { %>
     <h4>Instance members</h4>
     <div class="clearfix">
       <div class="sm-col sm-col-7 h5">Method</div>

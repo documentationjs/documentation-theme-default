@@ -16,12 +16,12 @@ test('type', function (t) {
   t.deepEqual(formatType({
     type: 'NameExpression',
     name: 'Foo'
-  }), 'Foo\n');
+  }), 'Foo');
 
   t.deepEqual(formatType({
     type: 'NameExpression',
     name: 'Foo'
-  }, ['Foo']), '<a href="#Foo">Foo</a>\n');
+  }, ['Foo']), '<a href="#Foo">Foo</a>');
 
   t.deepEqual(formatType({
     type: 'UnionType',
@@ -35,15 +35,15 @@ test('type', function (t) {
         name: 'Bar'
       }
     ]
-  }), '(\nFoo\n|\nBar\n)\n');
+  }), '(Foo | Bar)');
 
   t.deepEqual(formatType({
     type: 'AllLiteral'
-  }), 'Any\n');
+  }), 'Any');
 
   t.deepEqual(formatType({
     type: 'RestType'
-  }), '...\n');
+  }), '...');
 
   t.deepEqual(formatType({
     type: 'OptionalType',
@@ -51,7 +51,7 @@ test('type', function (t) {
       type: 'NameExpression',
       name: 'Foo'
     }
-  }), 'Foo\n=\n');
+  }), '[Foo]');
 
   t.deepEqual(formatType({
     type: 'TypeApplication',
@@ -63,12 +63,12 @@ test('type', function (t) {
       type: 'NameExpression',
       name: 'Bar'
     }]
-  }), 'Foo\n.&lt;\nBar\n&gt;\n');
+  }), 'Foo&lt;Bar&gt;');
 
   t.deepEqual(formatType({
     type: 'UndefinedLiteral'
   }), '<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/'
-    + 'Reference/Global_Objects/undefined">undefined</a>\n');
+    + 'Reference/Global_Objects/undefined">undefined</a>');
 
   t.done();
 });
@@ -76,12 +76,12 @@ test('type', function (t) {
 test('autolink', function (t) {
   var autolink = formatMarkdown.link;
 
-  t.equal(autolink([], 'Foo'), 'Foo\n');
+  t.equal(autolink([], 'Foo'), 'Foo');
   t.equal(autolink(['Foo'], 'Foo'),
-    '<a href="#Foo">Foo</a>\n');
+    '<a href="#Foo">Foo</a>');
   t.equal(autolink([], 'Array'),
-    '<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>\n');
-  t.equal(autolink([], 'C&O'), 'C&amp;O\n');
+    '<a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>');
+  t.equal(autolink([], 'C&O'), 'C&amp;O');
 
   t.done();
 });
