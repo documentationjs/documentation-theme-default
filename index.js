@@ -13,26 +13,11 @@ module.exports = function (comments, options, callback) {
 
   var highlight = require('./lib/highlight')(options.hljs || {});
 
-  var paths = comments.map(function (comment) {
-    return comment.path.join('.');
-  }).filter(function (path) {
-    return path;
+  var namespaces = comments.map(function (comment) {
+    return comment.namespace;
   });
 
-  var scopeChars = {
-    instance: '#',
-    static: '.',
-    event: 'ⓔ'
-  };
-
-  function permalink(path) {
-    return path.reduce(function(memo, part) {
-      return memo + (scopeChars[part.scope] || '') + part.name;
-    }, '');
-  }
-
   var imports = {
-    permalink: permalink,
     signature: function (section) {
       var returns = '';
       var prefix = '';
@@ -41,7 +26,7 @@ module.exports = function (comments, options, callback) {
       }
       if (section.returns) {
         returns = ': ' +
-          formatMarkdown.type(section.returns[0].type, paths);
+          formatMarkdown.type(section.returns[0].type, namespaces);
       }
       return prefix + section.name +
         formatParameters(section) + returns;
@@ -51,15 +36,15 @@ module.exports = function (comments, options, callback) {
         return formatMarkdown({
           type: 'root',
           children: ast.children[0].children
-        }, paths);
+        }, namespaces);
       }
-      return formatMarkdown(ast, paths);
+      return formatMarkdown(ast, namespaces);
     },
     formatType: function (section) {
-      return formatMarkdown.type(section.type, paths);
+      return formatMarkdown.type(section.type, namespaces);
     },
     autolink: function (text) {
-      return formatMarkdown.link(paths, text);
+      return formatMarkdown.link(namespaces, text);
     },
     highlight: function (str) {
       return highlight(str);
@@ -71,7 +56,6 @@ module.exports = function (comments, options, callback) {
       renderSection: _.template(fs.readFileSync(path.join(__dirname, 'section.hbs'), 'utf8'), {
         imports: imports
       }),
-      permalink: permalink,
       highlight: function (str) {
         return highlight(str);
       }

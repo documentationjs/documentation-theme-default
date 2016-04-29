@@ -1,6 +1,6 @@
 <section class='py2 clearfix'>
 
-  <h3 id='<%- permalink(section.path) %>' class='mt0'>
+  <h3 id='<%- section.namespace %>' class='mt0'>
     <%- section.name %>
   </h3>
 
@@ -107,7 +107,7 @@
       <div class="sm-col sm-col-7 h5">Method</div>
       <div class="sm-col sm-col-5 h5">Description</div>
       <% section.members.static.forEach(function(member) { %>
-	<div id='<%- permalink(member.path) %>'>
+	<div id='<%- member.namespace %>'>
 	  <div class="clearfix toggle-sibling">
 	    <div class="py1 keyline-top sm-col sm-col-7">
 	      <a class='h6 toggle-step-sibling icon'>▸</a> <span class='pre'><%= signature(member) %></span>
@@ -131,7 +131,7 @@
       <div class="sm-col sm-col-7 h5">Method</div>
       <div class="sm-col sm-col-5 h5">Description</div>
       <% section.members.instance.forEach(function(member) { %>
-	<div id='<%- permalink(member.path) %>'>
+	<div id='<%- member.namespace %>'>
 	  <div class="clearfix toggle-sibling">
 	    <div class="py1 keyline-top sm-col sm-col-7">
 	      <a class='h6 toggle-step-sibling icon'>▸</a> <span class='pre'><%= signature(member) %></span>
@@ -155,7 +155,7 @@
       <div class="sm-col sm-col-5 h5">Event</div>
       <div class="sm-col sm-col-7 h5">Description</div>
       <% section.members.events.forEach(function(member) { %>
-	<div id='<%- permalink(member.path) %>'>
+	<div id='<%- member.namespace %>'>
 	  <div class="clearfix toggle-sibling">
 	    <div class="py1 keyline-top sm-col sm-col-5">
 	      <a class='h6 toggle-step-sibling icon'>▸</a> <span class='pre'><%= signature(member) %></span>

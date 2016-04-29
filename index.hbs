@@ -25,7 +25,7 @@
               <% docs.forEach(function(doc) { %>
                 <% var hasMembers = doc.members.static.length || doc.members.instance.length %>
                 <li><a
-                  href='#<%=permalink(doc.path)%>'
+                  href='#<%=doc.namespace%>'
                   <% if (hasMembers) { %>
                   class='toggle-sibling'
                   <% } %>
@@ -40,7 +40,7 @@
                     <li class='h5'>Static members</li>
                     <% doc.members.static.forEach(function(member) { %>
                       <li><a
-                        href='#<%=permalink(member.path)%>'
+                        href='#<%=member.namespace%>'
                         class='regular pre-open'>
                         .<%- member.name %>
                       </a></li>
@@ -52,7 +52,7 @@
                       <li class='h5'>Instance members</li>
                       <% doc.members.instance.forEach(function(member) { %>
                       <li><a
-                        href='#<%=permalink(member.path)%>'
+                        href='#<%=member.namespace%>'
                         class='regular pre-open'>
                         #<%- member.name %>
                       </a></li>
@@ -64,7 +64,7 @@
                       <li class='h5'>Events</li>
                       <% doc.members.events.forEach(function(member) { %>
                         <li><a
-                          href='#<%=permalink(member.path)%>'
+                          href='#<%=member.namespace%>'
                           class='regular pre-open'>
                           ⓔ <%- member.name %>
                         </a></li>
