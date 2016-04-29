@@ -19,10 +19,20 @@ module.exports = function (comments, options, callback) {
     return path;
   });
 
+  var scopeChars = {
+    instance: '#',
+    static: '.',
+    event: 'ⓔ'
+  };
+
+  function permalink(path) {
+    return path.reduce(function(memo, part) {
+      return memo + (scopeChars[part.scope] || '') + part.name;
+    }, '');
+  }
+
   var imports = {
-    permalink: function (path) {
-      return path.join('.');
-    },
+    permalink: permalink,
     signature: function (section) {
       var returns = '';
       var prefix = '';
@@ -61,9 +71,7 @@ module.exports = function (comments, options, callback) {
       renderSection: _.template(fs.readFileSync(path.join(__dirname, 'section.hbs'), 'utf8'), {
         imports: imports
       }),
-      permalink: function (path) {
-        return path.join('.');
-      },
+      permalink: permalink,
       highlight: function (str) {
         return highlight(str);
       }
