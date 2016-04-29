@@ -5,7 +5,6 @@
   <title><%- options.name %> <%- options.version %> | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
-  <link href='assets/bass-addons.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
   <link href='assets/github.css' type='text/css' rel='stylesheet' />
 </head>
@@ -35,14 +34,14 @@
                   <% if (hasMembers) { %><span class='icon'>▸</span><% } %>
                 </a>
                 <% if (hasMembers) { %>
-                <div class='toggle-target hide'>
+                <div class='toggle-target display-none'>
                   <% if (doc.members.static && doc.members.static.length) { %>
                   <ul class='list-reset py1-ul pl1'>
-                    <div class='h5 pt1'>Static members</div>
+                    <li class='h5'>Static members</li>
                     <% doc.members.static.forEach(function(member) { %>
                       <li><a
                         href='#<%=permalink(member.path)%>'
-                        class='regular'>
+                        class='regular pre-open'>
                         #<%- member.name %>
                       </a></li>
                     <% }) %>
@@ -50,11 +49,11 @@
                   <% } %>
                   <% if (doc.members.instance && doc.members.instance.length) { %>
                     <ul class='list-reset py1-ul pl1'>
-                      <div class='h5 pt1'>Instance members</div>
+                      <li class='h5'>Instance members</li>
                       <% doc.members.instance.forEach(function(member) { %>
                       <li><a
                         href='#<%=permalink(member.path)%>'
-                        class='regular'>
+                        class='regular pre-open'>
                         .<%- member.name %>
                       </a></li>
                       <% }) %>
@@ -62,11 +61,11 @@
                   <% } %>
                   <% if (doc.members.events && doc.members.events.length) { %>
                     <ul class='list-reset py1-ul pl1'>
-                      <div class='h5 pt1'>Events</div>
+                      <li class='h5'>Events</li>
                       <% doc.members.events.forEach(function(member) { %>
                         <li><a
                           href='#<%=permalink(member.path)%>'
-                          class='regular'>
+                          class='regular pre-open'>
                           ⓔ <%- member.name %>
                         </a></li>
                       <% }) %>
